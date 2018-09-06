@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Tareas
+    </ion-title>
+    <ion-buttons end>
+
+      <button ion-button *ngIf="!ordenHabilitado" 
+      (click)="toogleOrdenHabilitado()">Editar</button>
+
+      <button ion-button *ngIf="ordenHabilitado"
+      (click)="toogleOrdenHabilitado()"
+      >Listo</button>
+
+      <button ion-button (click)="agregarTarea()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list [reorder]="ordenHabilitado" 
+  (ionItemReorder)="ordenarLista($event)">
+    <ion-item-sliding 
+      *ngFor="let tarea of tareas;let tareaIndex = index">
+      
+      <ion-item-options side="left" 
+      (click)="editarTarea(tareaIndex)"
+      >
+        <button ion-button>
+          <ion-icon name="create"></ion-icon>
+        </button>
+      </ion-item-options>
+
+      <ion-item>{{tarea}}</ion-item>
+      <ion-item-options side="right">
+        <button color="danger" ion-button 
+        (click)="archivarTarea(tareaIndex)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-fab bottom right>
+    <button ion-fab 
+    [navPush]="'TareasArchivadasPage'">
+      <ion-icon name="archive"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>
